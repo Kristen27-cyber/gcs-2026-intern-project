@@ -82,9 +82,12 @@ class TodoStore {
    * Remove a todo by its id.
    * @param {number} id
    */
-  removeTodo(id) {
+  removeTodo(id) { 
+    let todo = this.todos.find(t => id === t.id);
+    if (!todo) return;
+   this.todos = this.todos.filter(t => t !== todo);
     // TODO: remove the todo with the matching id from this.todos.
-  }
+  } 
 
   /**
    * Toggle the done status of a todo by its id.
@@ -104,6 +107,9 @@ class TodoStore {
    * @param {string} text
    */
   updateTodo(id, text) {
+    let todo = this.todos.find(t => id === t.id);
+    todo.text = text;
+    
     // TODO: change the `text` property of the todo with the matching id.
   }
 }
