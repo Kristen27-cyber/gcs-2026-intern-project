@@ -18,11 +18,11 @@ function saveToStorage(todos) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
   } catch {
-    // TODO: How should we handle this?
+    console.error("make sure theres enough Storage");
   }
 }
 
-/**
+/*
  * TodoStore — manages all todo state.
  *
  * Students: you'll implement the four CRUD methods below.
@@ -69,22 +69,36 @@ class TodoStore {
   addTodo(text) {
     // TODO: create a new todo object and add it to this.todos.
     // Hint: use Date.now() for a simple unique id.
+
+    // {{ id: number, text: string, done: boolean }
+
+    let id = Date.now();
+    let todo = {id,text,done:false};
+    this.todos.push(todo);
+
   }
 
   /**
    * Remove a todo by its id.
    * @param {number} id
    */
-  removeTodo(id) {
+  removeTodo(id) { 
+    let todo = this.todos.find(t => id === t.id);
+    if (!todo) return;
+   this.todos = this.todos.filter(t => t !== todo);
     // TODO: remove the todo with the matching id from this.todos.
-  }
+  } 
 
   /**
    * Toggle the done status of a todo by its id.
    * @param {number} id
    */
-  toggleTodo(id) {
-    // TODO: flip the `done` property of the todo with the matching id.
+  toggleTodo(id) 
+  {let todo = this.todos.find(t => id === t.id);
+    
+    if (!todo) return;
+    todo.done = !todo.done;
+    
   }
 
   /**
@@ -93,6 +107,9 @@ class TodoStore {
    * @param {string} text
    */
   updateTodo(id, text) {
+    let todo = this.todos.find(t => id === t.id);
+    todo.text = text;
+    
     // TODO: change the `text` property of the todo with the matching id.
   }
 }
